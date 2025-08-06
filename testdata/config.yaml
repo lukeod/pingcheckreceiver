@@ -1,0 +1,44 @@
+receivers:
+  ping:
+    collection_interval: 30s
+    initial_delay: 1s
+    privileged: false
+    targets:
+      - endpoint: google.com
+        count: 4
+        timeout: 5s
+        interval: 1s
+      - endpoint: 8.8.8.8
+        count: 3
+        timeout: 3s
+      - endpoint: cloudflare.com
+        count: 5
+        timeout: 10s
+        interval: 2s
+
+  ping/privileged:
+    collection_interval: 60s
+    privileged: true
+    targets:
+      - endpoint: localhost
+        count: 2
+        timeout: 2s
+        interval: 500ms
+
+  ping/minimal:
+    targets:
+      - endpoint: example.com
+
+processors:
+  batch:
+
+exporters:
+  debug:
+    verbosity: detailed
+
+service:
+  pipelines:
+    metrics:
+      receivers: [ping]
+      processors: [batch]
+      exporters: [debug]

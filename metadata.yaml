@@ -1,0 +1,103 @@
+type: ping
+
+status:
+  class: receiver
+  stability:
+    development: [metrics]
+
+sem_conv_version: 1.27.0
+
+attributes:
+  net.peer.name:
+    description: Hostname of the target
+    type: string
+  net.peer.ip:
+    description: IP address of the target
+    type: string
+  error.type:
+    description: Type of error encountered
+    type: string
+    enum: [timeout, dns_failure, network_unreachable, permission_denied, unknown]
+
+metrics:
+  ping.duration:
+    enabled: true
+    description: Round-trip time for ping packets
+    unit: ms
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.duration.min:
+    enabled: true
+    description: Minimum round-trip time
+    unit: ms
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.duration.max:
+    enabled: true
+    description: Maximum round-trip time
+    unit: ms
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.duration.avg:
+    enabled: true
+    description: Average round-trip time
+    unit: ms
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.duration.stddev:
+    enabled: true
+    description: Standard deviation of round-trip times
+    unit: ms
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.packet_loss:
+    enabled: true
+    description: Ratio of packets lost
+    unit: "1"
+    gauge:
+      value_type: double
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.packets.sent:
+    enabled: true
+    description: Number of packets sent
+    unit: "{packet}"
+    sum:
+      value_type: int
+      monotonic: true
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.packets.received:
+    enabled: true
+    description: Number of packets received
+    unit: "{packet}"
+    sum:
+      value_type: int
+      monotonic: true
+    attributes: [net.peer.name, net.peer.ip]
+
+  ping.errors:
+    enabled: false
+    description: Number of errors encountered
+    unit: "{error}"
+    sum:
+      value_type: int
+      monotonic: true
+    attributes: [net.peer.name, net.peer.ip, error.type]
+
+tests:
+  config:
+    targets:
+      - endpoint: localhost
+        count: 1
+        timeout: 1s

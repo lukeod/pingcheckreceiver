@@ -1,0 +1,41 @@
+default:
+all_set:
+  metrics:
+    ping.duration:
+      enabled: true
+    ping.duration.avg:
+      enabled: true
+    ping.duration.max:
+      enabled: true
+    ping.duration.min:
+      enabled: true
+    ping.duration.stddev:
+      enabled: true
+    ping.errors:
+      enabled: true
+    ping.packet_loss:
+      enabled: true
+    ping.packets.received:
+      enabled: true
+    ping.packets.sent:
+      enabled: true
+none_set:
+  metrics:
+    ping.duration:
+      enabled: false
+    ping.duration.avg:
+      enabled: false
+    ping.duration.max:
+      enabled: false
+    ping.duration.min:
+      enabled: false
+    ping.duration.stddev:
+      enabled: false
+    ping.errors:
+      enabled: false
+    ping.packet_loss:
+      enabled: false
+    ping.packets.received:
+      enabled: false
+    ping.packets.sent:
+      enabled: false
